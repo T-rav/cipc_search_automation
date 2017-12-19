@@ -38,7 +38,7 @@ static void SaveResults(def companyName){
 	def resultTable = ExtractResultsFromWebPage()
 	def fileName = "../Batch_Results/Name_Search/"+companyName+".csv"
 	def file = new File(fileName)
-	def csvHeader = "Enterprise Name,Enterprise/Tracking Number,Status" + newline
+	def csvHeader = "Enterprise Name,Enterprise Number,Status" + newline
 	def writeResult = csvHeader
 		
 	if(HasResults(resultTable)){
