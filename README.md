@@ -1,5 +1,6 @@
 # cipc_search_automation
-A set of Katalon scripts to automate the lookup of companies via the cipc.co.za website
+A set of Katalon scripts to automate the lookup of companies via the cipc.co.za website  
+Get Katalon here http://katalon.com/
 
 Only does 'Enterprise Name Search' currently
 
