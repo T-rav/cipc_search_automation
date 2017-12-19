@@ -26,13 +26,48 @@ WebUI.setText(findTestObject('Page_Companies and Intellectual Pro/input_ctl00cnt
 
 WebUI.click(findTestObject('Page_Companies and Intellectual Pro/input_ctl00cntMainbtnSearch'))
 
+saveResults(CompanyName)
+
 // WebUI.click(findTestObject('Page_Companies and Intellectual Pro/td_We did not find any enterpr'))
 
-WebDriver driver = DriverFactory.getWebDriver()
-String pageSource = driver.getPageSource()
+static void saveResults(def companyName){
+	def resultTable = extractResultsFromWebPage()
+	def file = new File("../Batch_Results/Name_Search/"+companyName+".csv")
+	def writeResult = "Enterprise Name, Enterprise/Tracking Number, Status"
+	
+	// if we have results in the table
+	if(HasResults(resultTable)){
+		// break up by line in table
+		resultTable.eachLine{ line, count ->
+			
+			// skip header, we already added it
+			if (count > 0) {
+				// for each 'cell' in a line assemble with ',' in correct location to make well formed csv
+				line.splitEachLine(" "){ cells ->
+					for(def x = 0; x < cells.count; x++){
+						//writeResult = writeResult.concat(cells[x])
+						if(x >= cells.count - 3){
+							writeResult = writeResult.concat(", ")
+						}else{
+							writeResult = writeResult.contact(" ")
+						}
+					}
+				}
+			}
+		}
+	}else{
+		file.write "No results found"
+		return
+	}
+	
+	file.write writeResult.toString()
+	
+}
 
+static String extractResultsFromWebPage(){
+	return WebUI.getText(findTestObject('Page_Companies and Intellectual Pro/results_table'))
+}
 
-
-// todo : find data and save to file ;)
-//WebUI.closeBrowser()
-
+static boolean HasResults(def resultTable){
+	return !resultTable.contains("We did not find any enterprises matching your search criteria.")
+}
