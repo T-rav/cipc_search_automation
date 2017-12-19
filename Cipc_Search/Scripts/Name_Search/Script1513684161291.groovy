@@ -36,8 +36,10 @@ WebUI.closeBrowser()
 static void saveResults(def companyName){
 	def newline = '\n';
 	def resultTable = extractResultsFromWebPage()
-	def file = new File("../Batch_Results/Name_Search/"+companyName+".csv")
-	def writeResult = "Enterprise Name,Enterprise/Tracking Number,Status" + newline
+	def fileName = "../Batch_Results/Name_Search/"+companyName+".csv"
+	def file = new File(fileName)
+	def csvHeader = "Enterprise Name,Enterprise/Tracking Number,Status" + newline
+	def writeResult = csvHeader
 		
 	if(HasResults(resultTable)){
 		resultTable.eachLine{ line, count ->
