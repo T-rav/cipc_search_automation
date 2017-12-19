@@ -35,7 +35,7 @@ WebUI.closeBrowser()
 // -- start methods --
 static void SaveResults(def companyName){
 	def newline = '\n';
-	def resultTable = extractResultsFromWebPage()
+	def resultTable = ExtractResultsFromWebPage()
 	def fileName = "../Batch_Results/Name_Search/"+companyName+".csv"
 	def file = new File(fileName)
 	def csvHeader = "Enterprise Name,Enterprise/Tracking Number,Status" + newline
@@ -44,8 +44,8 @@ static void SaveResults(def companyName){
 	if(HasResults(resultTable)){
 		resultTable.eachLine{ line, count ->
 			if (IsTableRow(count)) {
-				def tableRowAsCsv = FormatWebTableRowAsCsv(line);
-				writeResult = tableRowAsCsv.concat(newline);
+				def tableRowAsCsv = FormatWebRowAsCsv(line);
+				writeResult += tableRowAsCsv.concat(newline);
 			}
 		}
 	}else{
@@ -55,10 +55,9 @@ static void SaveResults(def companyName){
 	
 	// remove trailing new line
 	file.write writeResult.trim() 
-	
 }
 
-static boolean IsHeaderRow(def count){
+static boolean IsTableRow(def count){
 	return count > 0
 }
 
@@ -70,7 +69,7 @@ static boolean HasResults(def resultTable){
 	return !resultTable.contains("We did not find any enterprises matching your search criteria.")
 }
 
-static String FormatWebTableRowAsCsv(def line){
+static String FormatWebRowAsCsv(def line){
 	def cells = line.split(' ')
 	def totalCells = cells.length
 	def secondFromLastCell = totalCells - 3
@@ -86,5 +85,5 @@ static String FormatWebTableRowAsCsv(def line){
 		}
 	}
 	
-	return writeResult
+	return result
 }
