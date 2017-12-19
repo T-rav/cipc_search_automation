@@ -6,7 +6,8 @@ Only does 'Enterprise Name Search' currently
 
 **To Use**
 1) Add all the companies you wish to look up into Batch_Data\NameSearch.xlsx
-2) Run the Test Suite 'Batch_Name_Search', it will cycle through all the data in NameSearch.xlsx  
+2) Run the Test Suite *Batch_Name_Search*  
+&nbsp;&nbsp;&nbsp;>It will cycle through all the data in NameSearch.xlsx  
 &nbsp;&nbsp;&nbsp;**>Besure to use Chrome (Headless) as the browser so it runs in the background while you work!**
 3) Look in Batch_Results\Name_Search for all the results.  
 &nbsp;&nbsp;&nbsp;>The result is a csv file per name and will contain the *Entperise Name, Enterprise Number and Status* for every search result.   
