@@ -12,6 +12,6 @@ Only does 'Enterprise Name Search' currently
 &nbsp;&nbsp;&nbsp;>The result is a csv file per name and will contain the Entperise Name, Enterprise Number and Status for every company returned.  
 &nbsp;&nbsp;&nbsp;>If a there are no results the file will contain 'No results found'
 
-**Please Note**
+**Please Note**  
 There is a 20 second delay between lookups, this is to avoid hammering the server.  
 It should do about 3,000 lookups per 24 hours at this rate.
