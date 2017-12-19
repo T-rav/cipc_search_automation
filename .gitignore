@@ -1,1 +1,4 @@
 /Cipc_Search/Libs/TempTestCase*.groovy
+/Cipc_Search/Reports/**
+/Cipc_Search/Libs/TempTestSuite*.groovy
+/Cipc_Search/settings/internal/com.kms.katalon.integration.analytics.properties
