@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>Name_Search</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>1e4812bc-39fa-40d7-8adb-49a0531166a3</testCaseGuid>
+   <variable>
+      <defaultValue>'zapper'</defaultValue>
+      <description></description>
+      <id>9dcd5239-a1d2-4d3d-b556-172c86c83b68</id>
+      <masked>false</masked>
+      <name>CompanyName</name>
+   </variable>
+</TestCaseEntity>
