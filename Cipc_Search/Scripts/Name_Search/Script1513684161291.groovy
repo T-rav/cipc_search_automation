@@ -31,10 +31,11 @@ saveResults(CompanyName)
 // WebUI.click(findTestObject('Page_Companies and Intellectual Pro/td_We did not find any enterpr'))
 
 static void saveResults(def companyName){
+	def newline = '\n';
 	def resultTable = extractResultsFromWebPage()
 	def file = new File("../Batch_Results/Name_Search/"+companyName+".csv")
-	def writeResult = "Enterprise Name, Enterprise/Tracking Number, Status"
-	
+	def writeResult = "Enterprise Name,Enterprise/Tracking Number,Status" + newline
+		
 	// if we have results in the table
 	if(HasResults(resultTable)){
 		// break up by line in table
@@ -43,16 +44,21 @@ static void saveResults(def companyName){
 			// skip header, we already added it
 			if (count > 0) {
 				// for each 'cell' in a line assemble with ',' in correct location to make well formed csv
-				line.splitEachLine(" "){ cells ->
-					for(def x = 0; x < cells.count; x++){
-						//writeResult = writeResult.concat(cells[x])
-						if(x >= cells.count - 3){
-							writeResult = writeResult.concat(", ")
-						}else{
-							writeResult = writeResult.contact(" ")
-						}
+				def cells = line.split(' ')
+				def totalCells = cells.length
+				def secondFromLastCell = totalCells - 3
+				def lastCell = totalCells - 2
+				
+				for(def cellPosition = 0; cellPosition < totalCells; cellPosition++){
+					writeResult = writeResult.concat(cells[cellPosition])
+					if(cellPosition == secondFromLastCell || cellPosition == lastCell){
+						writeResult = writeResult.concat(",")
+					}else{
+						writeResult = writeResult.concat(" ")
 					}
 				}
+
+				writeResult = writeResult.concat(newline);
 			}
 		}
 	}else{
@@ -60,7 +66,8 @@ static void saveResults(def companyName){
 		return
 	}
 	
-	file.write writeResult.toString()
+	// remove trailing new line
+	file.write writeResult.trim() 
 	
 }
 
