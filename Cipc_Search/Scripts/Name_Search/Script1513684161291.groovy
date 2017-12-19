@@ -26,14 +26,14 @@ WebUI.setText(findTestObject('Page_Companies and Intellectual Pro/input_ctl00cnt
 
 WebUI.click(findTestObject('Page_Companies and Intellectual Pro/input_ctl00cntMainbtnSearch'))
 
-saveResults(CompanyName)
+SaveResults(CompanyName)
 
 WebUI.delay(20) // wait a bit before we close, don't want to hammer the server in test case mode ;)
 
 WebUI.closeBrowser()
 
 // -- start methods --
-static void saveResults(def companyName){
+static void SaveResults(def companyName){
 	def newline = '\n';
 	def resultTable = extractResultsFromWebPage()
 	def fileName = "../Batch_Results/Name_Search/"+companyName+".csv"
