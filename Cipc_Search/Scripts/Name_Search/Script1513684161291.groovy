@@ -28,37 +28,22 @@ WebUI.click(findTestObject('Page_Companies and Intellectual Pro/input_ctl00cntMa
 
 saveResults(CompanyName)
 
-// WebUI.click(findTestObject('Page_Companies and Intellectual Pro/td_We did not find any enterpr'))
+WebUI.delay(20) // wait a bit before we close, don't want to hammer the server in test case mode ;)
 
+WebUI.closeBrowser()
+
+// -- start methods --
 static void saveResults(def companyName){
 	def newline = '\n';
 	def resultTable = extractResultsFromWebPage()
 	def file = new File("../Batch_Results/Name_Search/"+companyName+".csv")
 	def writeResult = "Enterprise Name,Enterprise/Tracking Number,Status" + newline
 		
-	// if we have results in the table
 	if(HasResults(resultTable)){
-		// break up by line in table
 		resultTable.eachLine{ line, count ->
-			
-			// skip header, we already added it
-			if (count > 0) {
-				// for each 'cell' in a line assemble with ',' in correct location to make well formed csv
-				def cells = line.split(' ')
-				def totalCells = cells.length
-				def secondFromLastCell = totalCells - 3
-				def lastCell = totalCells - 2
-				
-				for(def cellPosition = 0; cellPosition < totalCells; cellPosition++){
-					writeResult = writeResult.concat(cells[cellPosition])
-					if(cellPosition == secondFromLastCell || cellPosition == lastCell){
-						writeResult = writeResult.concat(",")
-					}else{
-						writeResult = writeResult.concat(" ")
-					}
-				}
-
-				writeResult = writeResult.concat(newline);
+			if (IsTableRow(count)) {
+				def tableRowAsCsv = FormatWebTableRowAsCsv(line);
+				writeResult = tableRowAsCsv.concat(newline);
 			}
 		}
 	}else{
@@ -71,10 +56,33 @@ static void saveResults(def companyName){
 	
 }
 
-static String extractResultsFromWebPage(){
+static boolean IsHeaderRow(def count){
+	return count > 0
+}
+
+static String ExtractResultsFromWebPage(){
 	return WebUI.getText(findTestObject('Page_Companies and Intellectual Pro/results_table'))
 }
 
 static boolean HasResults(def resultTable){
 	return !resultTable.contains("We did not find any enterprises matching your search criteria.")
+}
+
+static String FormatWebTableRowAsCsv(def line){
+	def cells = line.split(' ')
+	def totalCells = cells.length
+	def secondFromLastCell = totalCells - 3
+	def lastCell = totalCells - 2
+	def result = ""
+	
+	for(def cellPosition = 0; cellPosition < totalCells; cellPosition++){
+		result = result.concat(cells[cellPosition])
+		if(cellPosition == secondFromLastCell || cellPosition == lastCell){
+			result = result.concat(",")
+		}else{
+			result = result.concat(" ")
+		}
+	}
+	
+	return writeResult
 }
